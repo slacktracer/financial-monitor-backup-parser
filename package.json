@@ -6,6 +6,8 @@
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
     "prettier": "^2.3.2"
   },
   "license": "MIT",
@@ -13,7 +15,8 @@
   "name": "financial-monitor-backup-parser",
   "scripts": {
     "format": "prettier . --write",
-    "lint": "eslint . --ext .js --fix"
+    "lint": "eslint . --ext .js --fix",
+    "prepare": "husky install"
   },
   "type": "module",
   "version": "1.0.0"
