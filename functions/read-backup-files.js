@@ -2,9 +2,7 @@ import csvParser from "csv-parser";
 import fs from "fs";
 import util from "util";
 
-export const readBackupFiles = async () => {
-  const [directory] = process.argv.slice(2);
-
+export const readBackupFiles = async ({ directory }) => {
   const readDirectory = util.promisify(fs.readdir);
 
   const result = await readDirectory(directory);
