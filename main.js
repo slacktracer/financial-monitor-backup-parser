@@ -1,10 +1,8 @@
-import fs from "fs";
-import util from "util";
-
 import { formatOperations } from "./functions/format-operations.js";
 import { formatTransfers } from "./functions/format-transfers.js";
 import { getGroupsAndCategories } from "./functions/get-groups-and categories.js";
 import { readBackupFiles } from "./functions/read-backup-files.js";
+import { writeToFiles } from "./functions/write-to-files.js";
 
 const [directory] = process.argv.slice(2);
 
@@ -17,18 +15,11 @@ const [directory] = process.argv.slice(2);
 
   const formattedTransfers = formatTransfers({ transfers });
 
-  const writeFile = util.promisify(fs.writeFile);
+  const configuration = [
+    { data: groupsAndCategories, filename: "groups.json" },
+    { data: formattedOperations, filename: "operations.json" },
+    { data: formattedTransfers, filename: "transfers.json" },
+  ];
 
-  await writeFile(
-    directory + "groupsAndCategories.json",
-    JSON.stringify(groupsAndCategories, null, 2),
-  );
-  await writeFile(
-    directory + "operations.json",
-    JSON.stringify(formattedOperations, null, 2),
-  );
-  await writeFile(
-    directory + "transfers.json",
-    JSON.stringify(formattedTransfers, null, 2),
-  );
+  await writeToFiles({ configuration, directory });
 })({ directory });
