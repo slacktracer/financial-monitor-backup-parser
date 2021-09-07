@@ -7,8 +7,8 @@ export const readBackupFiles = async ({ directory }) => {
 
   const result = await readDirectory(directory);
 
-  const backupFileNames = result.filter((fileName) =>
-    fileName.startsWith("Report"),
+  const backupFileNames = result.filter((filename) =>
+    filename.startsWith("Report"),
   );
 
   const [operations, transfers] = (
