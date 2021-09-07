@@ -6,7 +6,9 @@ export const writeToFiles = ({ configuration, directory }) => {
 
   const writeFile = util.promisify(fs.writeFile);
 
-  return configuration.map(({ data, filename }) =>
-    writeFile(directory + filename, stringify(data)),
+  return Promise.all(
+    configuration.map(({ data, filename }) =>
+      writeFile(directory + filename, stringify(data)),
+    ),
   );
 };
