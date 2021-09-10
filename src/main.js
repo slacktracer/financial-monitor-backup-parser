@@ -1,3 +1,4 @@
+import { formatAccounts } from "./functions/format-accounts.js";
 import { formatGroupsAndCategories } from "./functions/format-groups-and-categories.js";
 import { formatOperations } from "./functions/format-operations.js";
 import { formatTransfers } from "./functions/format-transfers.js";
@@ -10,6 +11,8 @@ const [directory] = process.argv.slice(2);
 (async ({ directory }) => {
   const { operations, transfers } = await readBackupFiles({ directory });
 
+  const formattedAccounts = formatAccounts({ operations, transfers });
+
   const groupsAndCategories = getGroupsAndCategories({ operations });
 
   const { formattedGroups, formattedCategories } = formatGroupsAndCategories({
@@ -17,14 +20,16 @@ const [directory] = process.argv.slice(2);
   });
 
   const formattedOperations = formatOperations({
+    formattedAccounts,
     formattedCategories,
     formattedGroups,
     operations,
   });
 
-  const formattedTransfers = formatTransfers({ transfers });
+  const formattedTransfers = formatTransfers({ formattedAccounts, transfers });
 
   const configuration = [
+    { data: formattedAccounts, filename: "accounts.json" },
     { data: formattedCategories, filename: "categories.json" },
     { data: formattedGroups, filename: "groups.json" },
     { data: formattedOperations, filename: "operations.json" },

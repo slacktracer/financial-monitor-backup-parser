@@ -1,4 +1,4 @@
 export const makeGetGroupIDByName =
   ({ formattedGroups }) =>
   ({ groupName }) =>
-    formattedGroups.find((group) => group.name === groupName).group_id;
+    formattedGroups.find((group) => group.name === groupName).groupID;

@@ -1,15 +1,12 @@
 import { v4 as uuid } from "uuid";
 
-const makeGetGroupIDByName =
-  ({ formattedGroups }) =>
-  ({ groupName }) =>
-    formattedGroups.find((group) => group.name === groupName).group_id;
+import { makeGetGroupIDByName } from "./make-get-group-id-by-name.js";
 
 export const formatGroupsAndCategories = ({ groupsAndCategories }) => {
   const groupNames = Object.keys(groupsAndCategories);
 
   const formattedGroups = groupNames.map((groupName) => ({
-    group_id: uuid(),
+    groupID: uuid(),
     name: groupName,
   }));
 
@@ -19,8 +16,8 @@ export const formatGroupsAndCategories = ({ groupsAndCategories }) => {
     .map((groupName) => {
       return groupsAndCategories[groupName].map((categoryName) => {
         return {
-          category_id: uuid(),
-          group_id: getGroupIDByName({ groupName }),
+          categoryID: uuid(),
+          groupID: getGroupIDByName({ groupName }),
           name: categoryName,
         };
       });

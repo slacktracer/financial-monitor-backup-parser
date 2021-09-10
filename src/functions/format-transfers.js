@@ -1,10 +1,14 @@
 import { getTime, parse } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 
+import { fixName } from "./fix-names.js";
+import { makeGetAccountIDByName } from "./make-get-account-id-by-name.js";
 import { parseAmount } from "./parse-amount.js";
 
-export const formatTransfers = ({ transfers }) => {
+export const formatTransfers = ({ formattedAccounts, transfers }) => {
   const formattedTransfers = [];
+
+  const getAccountIDByName = makeGetAccountIDByName({ formattedAccounts });
 
   for (const transfer of transfers) {
     const [
@@ -26,15 +30,21 @@ export const formatTransfers = ({ transfers }) => {
 
     const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
 
+    const fromAccountName = fixName({ name: fromAccount, type: "account" });
+
+    const toAccountName = fixName({ name: toAccount, type: "account" });
+
     formattedTransfers.push({
       amount: parseAmount({ amount }),
       comments,
       currency: currency.replace(/^r$/, "R$"),
-      fromAccount,
-      id: uuidv4(),
+      fromAccountName,
+      fromAccountID: getAccountIDByName({ accountName: fromAccountName }),
+      transferID: uuidv4(),
       rate,
       timestamp,
-      toAccount,
+      toAccountName,
+      toAccountID: getAccountIDByName({ accountName: toAccountName }),
       type,
       __meta__: { datepath, time },
     });

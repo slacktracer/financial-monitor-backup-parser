@@ -1,4 +1,9 @@
 export const nameFixes = {
+  account: {
+    "Vale Alimenta\x1A\x1Ao": "Vale Alimentação",
+    "CF PJ Aplica\x1A\x1Ao 1": "CF PJ Aplicação",
+    "Vale Refei\x1A\x1Ao": "Vale Refeição",
+  },
   category: {
     "ber-Nenm": "Uber-Nenééém",
     "culos Escuros": "Óculos Escuros",
