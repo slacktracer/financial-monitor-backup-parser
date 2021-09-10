@@ -1,3 +1,4 @@
+import { formatGroupsAndCategories } from "./functions/format-groups-and-categories.js";
 import { formatOperations } from "./functions/format-operations.js";
 import { formatTransfers } from "./functions/format-transfers.js";
 import { getGroupsAndCategories } from "./functions/get-groups-and categories.js";
@@ -11,12 +12,17 @@ const [directory] = process.argv.slice(2);
 
   const groupsAndCategories = getGroupsAndCategories({ operations });
 
+  const { formattedGroups, formattedCategories } = formatGroupsAndCategories({
+    groupsAndCategories,
+  });
+
   const formattedOperations = formatOperations({ operations });
 
   const formattedTransfers = formatTransfers({ transfers });
 
   const configuration = [
-    { data: groupsAndCategories, filename: "groups.json" },
+    { data: formattedCategories, filename: "categories.json" },
+    { data: formattedGroups, filename: "groups.json" },
     { data: formattedOperations, filename: "operations.json" },
     { data: formattedTransfers, filename: "transfers.json" },
   ];
