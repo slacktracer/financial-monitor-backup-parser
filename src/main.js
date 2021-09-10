@@ -16,7 +16,11 @@ const [directory] = process.argv.slice(2);
     groupsAndCategories,
   });
 
-  const formattedOperations = formatOperations({ operations });
+  const formattedOperations = formatOperations({
+    formattedCategories,
+    formattedGroups,
+    operations,
+  });
 
   const formattedTransfers = formatTransfers({ transfers });
 

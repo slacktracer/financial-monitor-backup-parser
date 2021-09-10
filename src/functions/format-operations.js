@@ -2,10 +2,20 @@ import { getTime, parse } from "date-fns";
 import { v4 as uuidv4 } from "uuid";
 
 import { fixName } from "./fix-names.js";
+import { makeGetCategoryIDByName } from "./make-get-category-id-by-name.js";
+import { makeGetGroupIDByName } from "./make-get-group-id-by-name.js";
 import { parseAmount } from "./parse-amount.js";
 
-export const formatOperations = ({ operations }) => {
+export const formatOperations = ({
+  formattedCategories,
+  formattedGroups,
+  operations,
+}) => {
   const formattedOperationsData = [];
+
+  const getCategoryIDByName = makeGetCategoryIDByName({ formattedCategories });
+
+  const getGroupIDByName = makeGetGroupIDByName({ formattedGroups });
 
   for (const operation of operations) {
     const [
@@ -27,15 +37,21 @@ export const formatOperations = ({ operations }) => {
 
     const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
 
+    const categoryName = fixName({ name: category, type: "category" });
+
+    const groupName = fixName({ name: group, type: "group" });
+
     formattedOperationsData.push({
       account,
       amount: parseAmount({ amount }),
       amountPerUnit: parseAmount({ amount: amountPerUnit }),
       comments,
-      category: fixName({ name: category, type: "category" }),
+      categoryID: getCategoryIDByName({ categoryName }),
+      categoryName,
       currency: currency.replace(/^r$/, "R$"),
-      group: fixName({ name: group, type: "group" }),
-      id: uuidv4(),
+      groupID: getGroupIDByName({ groupName }),
+      groupName,
+      operationID: uuidv4(),
       timestamp,
       type,
       unitCount: Number(unitCount),
