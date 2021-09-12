@@ -28,7 +28,8 @@ export const formatTransfers = ({ formattedAccounts, transfers }) => {
 
     const datepath = date.split(".").reverse();
 
-    const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
+    const timestamp =
+      getTime(parse(datetime, "dd.MM.yy HH:mm", new Date())) / 1000;
 
     const fromAccountName = fixName({ name: fromAccount, type: "account" });
 
@@ -50,5 +51,7 @@ export const formatTransfers = ({ formattedAccounts, transfers }) => {
     });
   }
 
-  return formattedTransfers;
+  return formattedTransfers.sort(
+    (transferA, transferB) => transferA.timestamp - transferB.timestamp,
+  );
 };
