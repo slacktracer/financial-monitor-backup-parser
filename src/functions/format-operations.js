@@ -39,7 +39,8 @@ export const formatOperations = ({
 
     const datepath = date.split(".").reverse();
 
-    const timestamp = getTime(parse(datetime, "dd.MM.yy HH:mm", new Date()));
+    const timestamp =
+      getTime(parse(datetime, "dd.MM.yy HH:mm", new Date())) / 1000;
 
     const accountName = fixName({ name: account, type: "account" });
 
@@ -66,5 +67,7 @@ export const formatOperations = ({
     });
   }
 
-  return formattedOperationsData;
+  return formattedOperationsData.sort(
+    (operationA, operationB) => operationA.timestamp - operationB.timestamp,
+  );
 };
