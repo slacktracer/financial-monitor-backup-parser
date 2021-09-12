@@ -3,6 +3,7 @@ export const outputSQL = ({
   formattedCategories,
   formattedGroups,
   formattedOperations,
+  formattedTransfers,
 }) => {
   const accounts = formattedAccounts
     .map(
@@ -47,8 +48,28 @@ export const outputSQL = ({
     )
     .join("\n");
 
+  const transfers = formattedTransfers
+    .map(
+      ({
+        amount,
+        comments,
+        currency,
+        fromAccountID,
+        transferID,
+        timestamp,
+        toAccountID,
+        type,
+      }) =>
+        `INSERT INTO public.transfers(amount, comments, currency, from_account_id, transfer_id, "timestamp", to_account_id, type) VALUES ('${amount}', '${comments.replace(
+          /'/g,
+          "''",
+        )}', '${currency}', '${fromAccountID}', '${transferID}', to_timestamp(${timestamp}), '${toAccountID}', '${type}');`,
+    )
+    .join("\n");
+
   console.log(accounts);
-  console.log(categories);
   console.log(groups);
+  console.log(categories);
   console.log(operations);
+  console.log(transfers);
 };
