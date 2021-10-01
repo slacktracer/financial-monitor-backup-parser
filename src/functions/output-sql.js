@@ -1,4 +1,8 @@
+import fs from "fs";
+import util from "util";
+
 export const outputSQL = ({
+  directory,
   formattedAccounts,
   formattedCategories,
   formattedGroups,
@@ -67,9 +71,11 @@ export const outputSQL = ({
     )
     .join("\n");
 
-  console.log(accounts);
-  console.log(groups);
-  console.log(categories);
-  console.log(transfers);
-  console.log(operations);
+  const filename = "all-inserts.sql";
+
+  const string = `${accounts}\n${groups}\n${categories}\n${transfers}\n${operations}`;
+
+  const writeFile = util.promisify(fs.writeFile);
+
+  return writeFile(directory + filename, string);
 };
