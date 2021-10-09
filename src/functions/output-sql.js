@@ -12,40 +12,28 @@ export const outputSQL = ({
   const accounts = formattedAccounts
     .map(
       ({ accountID, initialAmount, name }) =>
-        `INSERT INTO public.accounts(account_id, initial_amount, name) VALUES ('${accountID}', ${initialAmount}, '${name}');`,
+        `INSERT INTO public.account(account_id, initial_amount, name) VALUES ('${accountID}', ${initialAmount}, '${name}');`,
     )
     .join("\n");
 
   const categories = formattedCategories
     .map(
       ({ categoryID, groupID, name }) =>
-        `INSERT INTO public.categories(category_id, name, group_id) VALUES ('${categoryID}', '${name}', '${groupID}');`,
+        `INSERT INTO public.category(category_id, name, group_id) VALUES ('${categoryID}', '${name}', '${groupID}');`,
     )
     .join("\n");
 
   const groups = formattedGroups
     .map(
       ({ groupID, name }) =>
-        `INSERT INTO public.groups(group_id, name) VALUES ('${groupID}', '${name}');`,
+        `INSERT INTO public.group(group_id, name) VALUES ('${groupID}', '${name}');`,
     )
     .join("\n");
 
   const transfers = formattedTransfers
     .map(
-      ({
-        amount,
-        comments,
-        currency,
-        fromAccountID,
-        transferID,
-        timestamp,
-        toAccountID,
-        type,
-      }) =>
-        `INSERT INTO public.transfers(amount, comments, currency, from_account_id, transfer_id, "timestamp", to_account_id, type) VALUES (${amount}, '${comments.replace(
-          /'/g,
-          "''",
-        )}', '${currency}', '${fromAccountID}', '${transferID}', to_timestamp(${timestamp}), '${toAccountID}', '${type}');`,
+      ({ amount, fromAccountID, transferID, timestamp, toAccountID }) =>
+        `INSERT INTO public.transfer(amount, at, from_account_id, transfer_id, to_account_id) VALUES (${amount}, to_timestamp(${timestamp}), '${fromAccountID}', '${transferID}', '${toAccountID}');`,
     )
     .join("\n");
 
@@ -57,17 +45,16 @@ export const outputSQL = ({
         amountPerUnit,
         comments,
         categoryID,
-        currency,
         groupID,
         operationID,
         timestamp,
         type,
         unitCount,
       }) =>
-        `INSERT INTO public.operations(account_id, amount, amount_per_unit, comments, category_id, currency, group_id, operation_id, "timestamp", type, unit_count) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, '${comments.replace(
+        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, comments, category_id, group_id, operation_id, type, unit_count) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${comments.replace(
           /'/g,
           "''",
-        )}', '${categoryID}', '${currency}', '${groupID}', '${operationID}', to_timestamp(${timestamp}), '${type}', ${unitCount});`,
+        )}', '${categoryID}', '${groupID}', '${operationID}', '${type}', ${unitCount});`,
     )
     .join("\n");
 
