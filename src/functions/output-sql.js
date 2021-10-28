@@ -19,7 +19,10 @@ export const outputSQL = ({
   const categories = formattedCategories
     .map(
       ({ categoryID, groupID, name }) =>
-        `INSERT INTO public.category(category_id, name, group_id) VALUES ('${categoryID}', '${name}', '${groupID}');`,
+        `INSERT INTO public.category(category_id, name, group_id) VALUES ('${categoryID}', '${name.replace(
+          /'/g,
+          "''",
+        )}', '${groupID}');`,
     )
     .join("\n");
 
