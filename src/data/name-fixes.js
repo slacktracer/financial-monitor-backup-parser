@@ -1,7 +1,7 @@
 export const nameFixes = {
   account: {
-    "CF PJ Aplica\x1A\x1Ao 1": "CF PJ Aplicação 1",
-    "CF PJ Aplica\x1A\x1Ao 2": "CF PJ Aplicação 2",
+    "CF PF Aplica\x1A\x1Ao 1": "CF PF Aplicação 1",
+    "CF PF Aplica\x1A\x1Ao 2": "CF PF Aplicação 2",
     "Inter Aplica\x1A\x1Ao 1": "Inter Aplicação 1",
     "Poupan\x1Aa BB V1": "Poupança BB V1",
     "Poupan\x1Aa BB V51": "Poupança BB V51",
