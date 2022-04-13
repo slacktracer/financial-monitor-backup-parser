@@ -15,7 +15,8 @@ export const formatAccounts = ({ operations, transfers }) => {
   for (const transfer of transfers) {
     const [, , fromAccount, toAccount] = Object.values(transfer);
 
-    accounts.add(fromAccount, toAccount);
+    accounts.add(fromAccount);
+    accounts.add(toAccount);
   }
 
   const formattedAccounts = Array.from(accounts)
