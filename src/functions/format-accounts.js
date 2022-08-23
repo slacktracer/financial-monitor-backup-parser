@@ -6,8 +6,8 @@ import { fixName } from "./fix-names.js";
 export const formatAccounts = ({ operations, transfers }) => {
   const accounts = new Set();
 
-  for (const transfer of operations) {
-    const [, , account] = Object.values(transfer);
+  for (const operation of operations) {
+    const [, , account] = Object.values(operation);
 
     accounts.add(account);
   }
