@@ -1,10 +1,10 @@
 export const formatUser = ({ user }) => {
-  const [email, user_id, username, password] = user.split(",");
+  const [email, password, userID, username] = user.split(",");
 
   return {
     email,
-    user_id,
-    username,
     password,
+    userID,
+    username,
   };
 };
