@@ -1,2 +1,1 @@
-`node src/main.js SQL ../../Downloads/ 'username@example.com,Password1234!,00000000-0000-0000-0000-000000000000,username'`
-
+`node src/main.js SQL ../../Downloads/ 1aa26542-3cd3-4dbe-a741-e83a8a3db452`

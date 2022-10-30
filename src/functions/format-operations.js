@@ -3,23 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 
 import { fixName } from "./fix-names.js";
 import { makeGetAccountIDByName } from "./make-get-account-id-by-name.js";
-import { makeGetCategoryIDByName } from "./make-get-category-id-by-name.js";
-import { makeGetGroupIDByName } from "./make-get-group-id-by-name.js";
 import { parseAmount } from "./parse-amount.js";
 
-export const formatOperations = ({
-  formattedAccounts,
-  formattedCategories,
-  formattedGroups,
-  operations,
-}) => {
+export const formatOperations = ({ formattedAccounts, operations }) => {
   const formattedOperationsData = [];
 
   const getAccountIDByName = makeGetAccountIDByName({ formattedAccounts });
-
-  const getCategoryIDByName = makeGetCategoryIDByName({ formattedCategories });
-
-  const getGroupIDByName = makeGetGroupIDByName({ formattedGroups });
 
   for (const operation of operations) {
     const [
@@ -54,10 +43,8 @@ export const formatOperations = ({
       amount: parseAmount({ amount }),
       amountPerUnit: parseAmount({ amount: amountPerUnit }),
       comments,
-      categoryID: getCategoryIDByName({ categoryName }),
       categoryName,
       currency: currency.replace(/^r$/, "R$"),
-      groupID: getGroupIDByName({ groupName }),
       groupName,
       operationID: uuidv4(),
       timestamp,
