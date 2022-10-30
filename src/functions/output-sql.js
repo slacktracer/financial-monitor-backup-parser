@@ -5,7 +5,7 @@ export const outputSQL = ({
   directory,
   formattedAccounts,
   formattedOperations,
-  formattedTags,
+  formattedTagKeysAndValues,
   formattedTransfers,
   userID,
 }) => {
@@ -23,33 +23,14 @@ export const outputSQL = ({
     )
     .join("\n");
 
-  const operations = formattedOperations
-    .map(
-      ({
-        accountID,
-        amount,
-        amountPerUnit,
-        comments,
-        operationID,
-        timestamp,
-        type,
-        unitCount,
-      }) =>
-        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, comments, created_at, operation_id, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${comments.replace(
-          /'/g,
-          "''",
-        )}', NOW(), '${operationID}', '${type}', ${unitCount}, '${userID}');`,
-    )
-    .join("\n");
-
-  const tagKeys = formattedTags.tagKeys
+  const tagKeys = formattedTagKeysAndValues.keys
     .map(
       ({ tagKeyID, name }) =>
         `INSERT INTO public.tag_key(created_at, tag_key_id, name, user_id) VALUES (NOW(), '${tagKeyID}', '${name}', '${userID}');`,
     )
     .join("\n");
 
-  const tagValues = formattedTags.tagValues
+  const tagValues = formattedTagKeysAndValues.values
     .map(
       ({ tagValueID, name }) =>
         `INSERT INTO public.tag_value(created_at, tag_value_id, name, user_id) VALUES (NOW(), '${tagValueID}', '${name.replace(
@@ -59,16 +40,31 @@ export const outputSQL = ({
     )
     .join("\n");
 
-  const tags = formattedTags.tags
+  const operations = formattedOperations
     .map(
-      ({ operationID, tagID, tagKeyID, tagValueID }) =>
-        `INSERT INTO public.tag(created_at, operation_id, tag_id, tag_key_id, tag_value_id, user_id) VALUES (NOW(), '${operationID}', '${tagID}', '${tagKeyID}', '${tagValueID}', '${userID}');`,
+      ({
+        accountID,
+        amount,
+        amountPerUnit,
+        comments,
+        operationID,
+        tags,
+        timestamp,
+        type,
+        unitCount,
+      }) =>
+        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${comments.replace(
+          /'/g,
+          "''",
+        )}', NOW(), '${operationID}', '${JSON.stringify(
+          tags,
+        )}', '${type}', ${unitCount}, '${userID}');`,
     )
     .join("\n");
 
   const filename = "all-inserts.sql";
 
-  const string = `${accounts}\n${transfers}\n${operations}\n${tagKeys}\n${tagValues}\n${tags}`;
+  const string = `${accounts}\n${transfers}\n${tagKeys}\n${tagValues}\n${operations}`;
 
   const writeFile = util.promisify(fs.writeFile);
 

@@ -5,10 +5,23 @@ import { fixName } from "./fix-names.js";
 import { makeGetAccountIDByName } from "./make-get-account-id-by-name.js";
 import { parseAmount } from "./parse-amount.js";
 
-export const formatOperations = ({ formattedAccounts, operations }) => {
+export const formatOperations = ({
+  formattedAccounts,
+  formattedTagKeysAndValues,
+  operations,
+}) => {
   const formattedOperationsData = [];
 
   const getAccountIDByName = makeGetAccountIDByName({ formattedAccounts });
+
+  const getTagKeyID = ({ tagKeyName }) =>
+    formattedTagKeysAndValues.keys.find((tagKey) => tagKey.name === tagKeyName)
+      .tagKeyID;
+
+  const getTagValueID = ({ tagValueName }) =>
+    formattedTagKeysAndValues.values.find(
+      (tagValue) => tagValue.name === tagValueName,
+    ).tagValueID;
 
   for (const operation of operations) {
     const [
@@ -47,6 +60,14 @@ export const formatOperations = ({ formattedAccounts, operations }) => {
       currency: currency.replace(/^r$/, "R$"),
       groupName,
       operationID: uuidv4(),
+      tags: {
+        [getTagKeyID({ tagKeyName: "Category" })]: getTagValueID({
+          tagValueName: categoryName,
+        }),
+        [getTagKeyID({ tagKeyName: "Group" })]: getTagValueID({
+          tagValueName: groupName,
+        }),
+      },
       timestamp,
       type,
       unitCount: Number(unitCount),

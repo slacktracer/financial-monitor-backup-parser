@@ -142,6 +142,7 @@ export const nameFixes = {
     "Macarro": "Macarrão",
     "Mamo": "Mamão",
     "Mangal das Garas (atraes)": "Mangal das Garças (atrações)",
+    "Mquina de Caf": "Máquina de Café",
     "Mecnico": "Mecânico",
     "Melo": "Melão",
     "Mormao": "Mormaço",
