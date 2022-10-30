@@ -5,8 +5,8 @@ export const getGroupsAndCategories = ({ operations }) => {
     .reduce((reduction, operation) => {
       let [, , , group, category] = Object.values(operation);
 
-      category = fixName({ name: category, type: "category" });
-      group = fixName({ name: group, type: "group" });
+      category = fixName({ name: category });
+      group = fixName({ name: group });
 
       const existingGroupObject = reduction.find(
         (groupObject) => groupObject.name === group,

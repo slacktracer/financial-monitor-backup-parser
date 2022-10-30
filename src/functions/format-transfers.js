@@ -31,9 +31,9 @@ export const formatTransfers = ({ formattedAccounts, transfers }) => {
     const timestamp =
       getTime(parse(datetime, "dd.MM.yy HH:mm", new Date())) / 1000;
 
-    const fromAccountName = fixName({ name: fromAccount, type: "account" });
+    const fromAccountName = fixName({ name: fromAccount });
 
-    const toAccountName = fixName({ name: toAccount, type: "account" });
+    const toAccountName = fixName({ name: toAccount });
 
     formattedTransfers.push({
       amount: parseAmount({ amount }),

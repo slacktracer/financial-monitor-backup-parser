@@ -1,9 +1,9 @@
 import { nameFixes } from "../data/name-fixes.js";
 
-export const fixName = ({ name, type }) => {
+export const fixName = ({ name }) => {
   let fixedName = "";
 
-  fixedName = nameFixes[type][name] || name;
+  fixedName = nameFixes[name] || name;
 
   return fixedName;
 };

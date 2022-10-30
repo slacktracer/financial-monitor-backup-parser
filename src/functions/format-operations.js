@@ -44,11 +44,11 @@ export const formatOperations = ({
     const timestamp =
       getTime(parse(datetime, "dd.MM.yy HH:mm", new Date())) / 1000;
 
-    const accountName = fixName({ name: account, type: "account" });
+    const accountName = fixName({ name: account });
 
-    const categoryName = fixName({ name: category, type: "category" });
+    const categoryName = fixName({ name: category });
 
-    const groupName = fixName({ name: group, type: "group" });
+    const groupName = fixName({ name: group });
 
     formattedOperationsData.push({
       accountID: getAccountIDByName({ accountName }),
