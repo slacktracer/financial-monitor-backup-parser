@@ -1,5 +1,5 @@
 import { getTime, parse } from "date-fns";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 import { fixName } from "./fix-names.js";
 import { makeGetAccountIDByName } from "./make-get-account-id-by-name.js";
@@ -41,7 +41,7 @@ export const formatTransfers = ({ formattedAccounts, transfers }) => {
       currency: currency.replace(/^r$/, "R$"),
       fromAccountName,
       fromAccountID: getAccountIDByName({ accountName: fromAccountName }),
-      transferID: uuidv4(),
+      transferID: uuid(),
       rate,
       timestamp,
       toAccountName,

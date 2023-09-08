@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 import { initialAmountsByAccount } from "../data/initial-amounts-by-account.js";
 import { fixName } from "./fix-names.js";
@@ -23,7 +23,7 @@ export const formatAccounts = ({ operations, transfers }) => {
     .map((account) => fixName({ name: account }))
     .sort((accountA, accountB) => accountA.localeCompare(accountB))
     .map((account) => ({
-      accountID: uuidv4(),
+      accountID: uuid(),
       initialAmount: initialAmountsByAccount[account] || 0,
       name: account,
     }));

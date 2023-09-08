@@ -1,8 +1,8 @@
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 export const formatTagKeysAndValues = ({ groupsAndCategories }) => {
-  const categoryTagKeyID = uuidv4();
-  const groupTagKeyID = uuidv4();
+  const categoryTagKeyID = uuid();
+  const groupTagKeyID = uuid();
 
   const keys = [
     {
@@ -24,7 +24,7 @@ export const formatTagKeysAndValues = ({ groupsAndCategories }) => {
   ];
 
   const values = allGroupsAndCategories.map((value) => ({
-    tagValueID: uuidv4(),
+    tagValueID: uuid(),
     name: value,
   }));
 

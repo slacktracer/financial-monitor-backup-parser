@@ -1,5 +1,5 @@
 import { getTime, parse } from "date-fns";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuid } from "uuid";
 
 import { fixName } from "./fix-names.js";
 import { makeGetAccountIDByName } from "./make-get-account-id-by-name.js";
@@ -59,7 +59,7 @@ export const formatOperations = ({
       categoryName,
       currency: currency.replace(/^r$/, "R$"),
       groupName,
-      operationID: uuidv4(),
+      operationID: uuid(),
       tags: {
         [getTagKeyID({ tagKeyName: "Category" })]: getTagValueID({
           tagValueName: categoryName,
