@@ -5,7 +5,6 @@ export const outputSQL = ({
   directory,
   formattedAccounts,
   formattedOperations,
-  formattedTagKeysAndValues,
   formattedTransfers,
   userID,
 }) => {
@@ -20,23 +19,6 @@ export const outputSQL = ({
     .map(
       ({ amount, fromAccountID, timestamp, toAccountID, transferID }) =>
         `INSERT INTO public.transfer(amount, at, created_at, from_account_id, to_account_id, transfer_id, user_id) VALUES (${amount}, to_timestamp(${timestamp}), NOW(), '${fromAccountID}', '${toAccountID}', '${transferID}', '${userID}');`,
-    )
-    .join("\n");
-
-  const tagKeys = formattedTagKeysAndValues.keys
-    .map(
-      ({ tagKeyID, name }) =>
-        `INSERT INTO public.tag_key(created_at, tag_key_id, name, user_id) VALUES (NOW(), '${tagKeyID}', '${name}', '${userID}');`,
-    )
-    .join("\n");
-
-  const tagValues = formattedTagKeysAndValues.values
-    .map(
-      ({ tagValueID, name }) =>
-        `INSERT INTO public.tag_value(created_at, tag_value_id, name, user_id) VALUES (NOW(), '${tagValueID}', '${name.replace(
-          /'/g,
-          "''",
-        )}', '${userID}');`,
     )
     .join("\n");
 
@@ -64,7 +46,7 @@ export const outputSQL = ({
 
   const filename = "all-inserts.sql";
 
-  const string = `${accounts}\n${transfers}\n${tagKeys}\n${tagValues}\n${operations}`;
+  const string = `${accounts}\n${transfers}\n${operations}`;
 
   const writeFile = util.promisify(fs.writeFile);
 

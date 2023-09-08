@@ -5,7 +5,6 @@ import { getGroupsAndCategories } from "./functions/get-groups-and categories.js
 import { outputJSON } from "./functions/output-json.js";
 import { outputSQL } from "./functions/output-sql.js";
 import { readBackupFiles } from "./functions/read-backup-files.js";
-import { formatTagKeysAndValues } from "./functions/format-tag-keys-and-values.js";
 import { formatGroupsAndCategories } from "./functions/format-groups-and-categories.js";
 
 const [output, directory, userID] = process.argv.slice(2);
@@ -17,17 +16,12 @@ const [output, directory, userID] = process.argv.slice(2);
 
   const groupsAndCategories = getGroupsAndCategories({ operations });
 
-  const formattedTagKeysAndValues = formatTagKeysAndValues({
-    groupsAndCategories,
-  });
-
   const formattedGroupsAndCategories = formatGroupsAndCategories({
     groupsAndCategories,
   });
 
   const formattedOperations = formatOperations({
     formattedAccounts,
-    formattedTagKeysAndValues,
     formattedGroupsAndCategories,
     operations,
   });
@@ -39,7 +33,6 @@ const [output, directory, userID] = process.argv.slice(2);
       directory,
       formattedAccounts,
       formattedOperations,
-      formattedTagKeysAndValues,
       formattedTransfers,
     });
   }
@@ -49,7 +42,6 @@ const [output, directory, userID] = process.argv.slice(2);
       directory,
       formattedAccounts,
       formattedOperations,
-      formattedTagKeysAndValues,
       formattedTransfers,
       userID,
     });

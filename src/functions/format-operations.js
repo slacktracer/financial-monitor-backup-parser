@@ -8,21 +8,11 @@ import { parseAmount } from "./parse-amount.js";
 export const formatOperations = ({
   formattedAccounts,
   formattedGroupsAndCategories,
-  formattedTagKeysAndValues,
   operations,
 }) => {
   const formattedOperationsData = [];
 
   const getAccountIDByName = makeGetAccountIDByName({ formattedAccounts });
-
-  const getTagKeyID = ({ tagKeyName }) =>
-    formattedTagKeysAndValues.keys.find((tagKey) => tagKey.name === tagKeyName)
-      .tagKeyID;
-
-  const getTagValueID = ({ tagValueName }) =>
-    formattedTagKeysAndValues.values.find(
-      (tagValue) => tagValue.name === tagValueName,
-    ).tagValueID;
 
   for (const operation of operations) {
     const [
@@ -66,14 +56,7 @@ export const formatOperations = ({
       currency: currency.replace(/^r$/, "R$"),
       groupName,
       operationID: uuid(),
-      tags: {
-        [getTagKeyID({ tagKeyName: "Category" })]: getTagValueID({
-          tagValueName: categoryName,
-        }),
-        [getTagKeyID({ tagKeyName: "Group" })]: getTagValueID({
-          tagValueName: groupName,
-        }),
-      },
+      tags: {},
       timestamp,
       type,
       unitCount: Number(unitCount),
