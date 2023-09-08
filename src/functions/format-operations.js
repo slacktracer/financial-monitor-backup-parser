@@ -7,6 +7,7 @@ import { parseAmount } from "./parse-amount.js";
 
 export const formatOperations = ({
   formattedAccounts,
+  formattedGroupsAndCategories,
   formattedTagKeysAndValues,
   operations,
 }) => {
@@ -48,6 +49,10 @@ export const formatOperations = ({
 
     const categoryName = fixName({ name: category });
 
+    const categoryID = formattedGroupsAndCategories.categories.find(
+      (category) => category.name === categoryName,
+    )?.categoryID;
+
     const groupName = fixName({ name: group });
 
     formattedOperationsData.push({
@@ -56,6 +61,7 @@ export const formatOperations = ({
       amount: parseAmount({ amount }),
       amountPerUnit: parseAmount({ amount: amountPerUnit }),
       comments,
+      categoryID,
       categoryName,
       currency: currency.replace(/^r$/, "R$"),
       groupName,
