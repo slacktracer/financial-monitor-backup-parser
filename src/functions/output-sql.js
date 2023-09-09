@@ -26,14 +26,14 @@ export const outputSQL = ({
   const groups = formattedGroupsAndCategories.groups
     .map(
       ({ groupID, name }) =>
-        `INSERT INTO public.group(created_at, group_id, name, user_id) VALUES (NOW(), '${groupID}', ${name}, '${userID}');`,
+        `INSERT INTO public.group(created_at, group_id, name, user_id) VALUES (NOW(), '${groupID}', '${name}', '${userID}');`,
     )
     .join("\n");
 
   const categories = formattedGroupsAndCategories.categories
     .map(
       ({ categoryID, groupID, name }) =>
-        `INSERT INTO public.category(category_id, created_at, group_id, name, user_id) VALUES ('${categoryID}', NOW(), '${groupID}', ${name}, '${userID}');`,
+        `INSERT INTO public.category(category_id, created_at, group_id, name, user_id) VALUES ('${categoryID}', NOW(), '${groupID}', '${name}', '${userID}');`,
     )
     .join("\n");
 
