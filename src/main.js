@@ -41,6 +41,7 @@ const [output, directory, userID] = process.argv.slice(2);
     await outputSQL({
       directory,
       formattedAccounts,
+      formattedGroupsAndCategories,
       formattedOperations,
       formattedTransfers,
       userID,

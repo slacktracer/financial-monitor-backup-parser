@@ -4,6 +4,7 @@ import util from "util";
 export const outputSQL = ({
   directory,
   formattedAccounts,
+  formattedGroupsAndCategories,
   formattedOperations,
   formattedTransfers,
   userID,
@@ -22,12 +23,29 @@ export const outputSQL = ({
     )
     .join("\n");
 
+  const groups = formattedGroupsAndCategories.groups
+    .map(
+      ({ groupID, name }) =>
+        `INSERT INTO public.group(created_at, group_id, name) VALUES (NOW(), ${groupID}, ${name})`,
+    )
+    .join("\n");
+
+  const categories = formattedGroupsAndCategories.categories
+    .map(
+      ({ categoryID, groupID, name }) =>
+        `INSERT INTO public.category(category_id, created_at, group_id, name) VALUES (${categoryID}, NOW(), ${groupID}, ${name})`,
+    )
+    .join("\n");
+
+  console.log(formattedGroupsAndCategories);
+
   const operations = formattedOperations
     .map(
       ({
         accountID,
         amount,
         amountPerUnit,
+        categoryID,
         comments,
         operationID,
         tags,
@@ -35,7 +53,7 @@ export const outputSQL = ({
         type,
         unitCount,
       }) =>
-        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${comments.replace(
+        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, category_id, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), ${categoryID}, '${comments.replace(
           /'/g,
           "''",
         )}', NOW(), '${operationID}', '${JSON.stringify(
@@ -46,7 +64,7 @@ export const outputSQL = ({
 
   const filename = "all-inserts.sql";
 
-  const string = `${accounts}\n${transfers}\n${operations}`;
+  const string = `${accounts}\n${transfers}\n${groups}\n${categories}\n${operations}`;
 
   const writeFile = util.promisify(fs.writeFile);
 
