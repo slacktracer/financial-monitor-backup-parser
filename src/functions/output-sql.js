@@ -37,8 +37,6 @@ export const outputSQL = ({
     )
     .join("\n");
 
-  console.log(formattedGroupsAndCategories);
-
   const operations = formattedOperations
     .map(
       ({
