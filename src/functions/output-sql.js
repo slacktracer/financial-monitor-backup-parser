@@ -57,7 +57,7 @@ export const outputSQL = ({
         type,
         unitCount,
       }) =>
-        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, category_id, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), ${categoryID}, '${comments.replace(
+        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, category_id, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${categoryID}', '${comments.replace(
           /'/g,
           "''",
         )}', NOW(), '${operationID}', '${JSON.stringify(
