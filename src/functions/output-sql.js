@@ -12,21 +12,31 @@ export const outputSQL = ({
   const accounts = formattedAccounts
     .map(
       ({ accountID, initialAmount, name }) =>
-        `INSERT INTO public.account(account_id, created_at, initial_amount, name, user_id) VALUES ('${accountID}', NOW(), ${initialAmount}, '${name}', '${userID}');`,
+        `INSERT INTO public.account(account_id, created_at, created_at_timezone, initial_amount, name, user_id) VALUES ('${accountID}', NOW(), 'America/Belem', ${initialAmount}, '${name}', '${userID}');`,
     )
     .join("\n");
 
   const transfers = formattedTransfers
     .map(
-      ({ amount, fromAccountID, timestamp, toAccountID, transferID }) =>
-        `INSERT INTO public.transfer(amount, at, created_at, from_account_id, to_account_id, transfer_id, user_id) VALUES (${amount}, to_timestamp(${timestamp}), NOW(), '${fromAccountID}', '${toAccountID}', '${transferID}', '${userID}');`,
+      ({
+        amount,
+        comments,
+        fromAccountID,
+        timestamp,
+        toAccountID,
+        transferID,
+      }) =>
+        `INSERT INTO public.transfer(amount, at, at_timezone, comments, created_at, created_at_timezone, from_account_id, to_account_id, transfer_id, user_id) VALUES (${amount}, to_timestamp(${timestamp}), 'America/Belem', '${comments.replace(
+          /'/g,
+          "''",
+        )}', NOW(), 'America/Belem', '${fromAccountID}', '${toAccountID}', '${transferID}', '${userID}');`,
     )
     .join("\n");
 
   const groups = formattedGroupsAndCategories.groups
     .map(
       ({ groupID, name }) =>
-        `INSERT INTO public.group(created_at, group_id, name, user_id) VALUES (NOW(), '${groupID}', '${name.replace(
+        `INSERT INTO public.group(created_at, created_at_timezone, group_id, name, user_id) VALUES (NOW(), 'America/Belem', '${groupID}', '${name.replace(
           /'/g,
           "''",
         )}', '${userID}');`,
@@ -36,7 +46,7 @@ export const outputSQL = ({
   const categories = formattedGroupsAndCategories.categories
     .map(
       ({ categoryID, groupID, name }) =>
-        `INSERT INTO public.category(category_id, created_at, group_id, name, user_id) VALUES ('${categoryID}', NOW(), '${groupID}', '${name.replace(
+        `INSERT INTO public.category(category_id, created_at, created_at_timezone, group_id, name, user_id) VALUES ('${categoryID}', NOW(), 'America/Belem', '${groupID}', '${name.replace(
           /'/g,
           "''",
         )}', '${userID}');`,
@@ -57,10 +67,10 @@ export const outputSQL = ({
         type,
         unitCount,
       }) =>
-        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, category_id, comments, created_at, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), '${categoryID}', '${comments.replace(
+        `INSERT INTO public.operation(account_id, amount, amount_per_unit, at, at_timezone, category_id, comments, created_at, created_at_timezone, operation_id, tags, type, unit_count, user_id) VALUES ('${accountID}', ${amount}, ${amountPerUnit}, to_timestamp(${timestamp}), 'America/Belem', '${categoryID}', '${comments.replace(
           /'/g,
           "''",
-        )}', NOW(), '${operationID}', '${JSON.stringify(
+        )}', NOW(), 'America/Belem', '${operationID}', '${JSON.stringify(
           tags,
         )}', '${type}', ${unitCount}, '${userID}');`,
     )
