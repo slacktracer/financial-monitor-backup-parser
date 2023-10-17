@@ -132,25 +132,13 @@ const [directory] = process.argv.slice(2);
     }
   });
 
-  const corruptedWordsWithExamplesAsString = Object.entries(
-    corruptedWordsWithExamples,
-  )
-    .sort(([wordA], [wordB]) => wordA.localeCompare(wordB))
-    .map((a) => [a[0], "   ==>   " + a[1].join(" | ")])
-    .join("\n");
-
   const writeFile = util.promisify(fs.writeFile);
-
-  await writeFile(
-    directory + "corrupted-words-with-examples.txt",
-    corruptedWordsWithExamplesAsString,
-  );
 
   const corruptedWordsWithExamplesInNameFixesFormat = Object.entries(
     corruptedWordsWithExamples,
   )
     .sort(([wordA], [wordB]) => wordA.localeCompare(wordB))
-    .map(([a]) => `"${a}": "<todo>",`)
+    .map(([word, examples]) => `"${word}": "<todo>", // ${examples}`)
     .join("\n");
 
   await writeFile(
