@@ -20,7 +20,7 @@ export const formatAccounts = ({ operations, transfers }) => {
   }
 
   const formattedAccounts = Array.from(accounts)
-    .map((account) => fixName({ name: account }))
+    .map((account) => fixName({ name: account, type: "account" }))
     .sort((accountA, accountB) => accountA.localeCompare(accountB))
     .map((account) => ({
       accountID: uuid(),

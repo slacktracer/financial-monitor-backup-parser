@@ -35,15 +35,15 @@ export const formatOperations = ({
     const timestamp =
       getTime(parse(datetime, "dd.MM.yy HH:mm", new Date())) / 1000;
 
-    const accountName = fixName({ name: account });
+    const accountName = fixName({ name: account, type: "account" });
 
-    const categoryName = fixName({ name: category });
+    const categoryName = fixName({ name: category, type: "category" });
 
     const categoryID = formattedGroupsAndCategories.categories.find(
       (category) => category.name === categoryName,
     )?.categoryID;
 
-    const groupName = fixName({ name: group });
+    const groupName = fixName({ name: group, type: "group" });
 
     formattedOperationsData.push({
       accountID: getAccountIDByName({ accountName }),
