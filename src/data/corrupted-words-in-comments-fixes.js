@@ -137,7 +137,7 @@ export const corruptedWordsInCommentsFixes = {
   "dirias": "diárias",
   "Dirio": "Diário",
   "Discrepncia": "Discrepância",
-  "diverses": "<todo>", // Parque de diverses.
+  "diverses": "diversões", // Parque de diverses.
   "dlar": "dólar",
   "Domin": "Dominó",
   "domnio": "domínio",
@@ -409,7 +409,7 @@ export const corruptedWordsInCommentsFixes = {
   "Rodzio": "Rodízio",
   "Rodzios": "Rodízios",
   "Roldo": "Roldão",
-  "Rosrio": "<todo>", // No Rosrio.,Rosrio.
+  "Rosrio": "Rosário", // No Rosrio.,Rosrio.
   "rveillon": "réveillon",
   "s": "só",
   "S": "Só",
